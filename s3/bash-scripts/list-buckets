@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+echo "== List buckets =="
+
+aws s3api list-buckets | jq -r '.Buckets | sort_by(.CreationDate) | .[] | .Name' 

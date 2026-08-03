@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+echo "== Sync a local directory to a bucket =="
+if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "Usage: need <bucket-name> <local-directory>"
+    exit 1
+fi
+
+aws s3 sync "$2" "s3://$1" --exact-timestamps

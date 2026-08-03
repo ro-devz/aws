@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+echo "== Lists objects in a bucket =="
+if [ -z "$1" ]; then
+    echo "Usage: need <bucket-name>"
+    exit 1
+fi
+
+aws s3api list-objects --bucket "$1" --query 'Contents[].{Key: Key, Size: Size}' --output table
+
+
+echo "== List with sorts =="
+
