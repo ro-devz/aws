@@ -1,12 +1,27 @@
 {
-  "name": "aws-powershell-devcontainer",
+  "name": "aws-powershell-ruby-java-devcontainer",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/ruby:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "latest",
+      "installMaven": true,
+      "installGradle": true
+    }
+  },
+  "containerEnv": {
+    "AWS_CLI_AUTO_PROMPT": "on"
+  },
   "postCreateCommand": "cd $CODESPACE_VSCODE_FOLDER && curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\" && unzip -o awscliv2.zip && sudo ./aws/install --update && PWSH_URL=$(curl -s https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -oP '\"browser_download_url\":\\s*\"\\K[^\"]*linux-x64\\.tar\\.gz(?=\")') && sudo mkdir -p /opt/microsoft/powershell/7 && curl -L \"$PWSH_URL\" -o /tmp/powershell.tar.gz && sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && sudo chmod +x /opt/microsoft/powershell/7/pwsh && sudo ln -sf /opt/microsoft/powershell/7/pwsh /usr/local/bin/pwsh && pwsh -NoLogo -Command \"Install-Module AWS.Tools.Installer -Force -Scope CurrentUser; Install-AWSToolsModule AWS.Tools.Common,AWS.Tools.S3,AWS.Tools.EC2 -CleanUp -Force\"",
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-vscode.powershell",
-        "amazonwebservices.aws-toolkit-vscode"
+        "amazonwebservices.aws-toolkit-vscode",
+        "shopify.ruby-lsp",
+        "vscjava.vscode-java-pack"
       ]
     }
   }
