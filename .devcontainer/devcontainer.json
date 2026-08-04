@@ -1,8 +1,13 @@
 {
-  "name": "AWS Examples",
+  "name": "aws-powershell-devcontainer",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "containerEnv": {
-    "AWS_CLI_AUTO_PROMPT": "on-partial"
-  },
-  "postCreateCommand": "cd $CODESPACE_VSCODE_FOLDER && curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\" && unzip -o awscliv2.zip && ./aws/install -i $CODESPACE_VSCODE_FOLDER/aws-cli -b $CODESPACE_VSCODE_FOLDER/bin && sudo apt-get update && sudo apt-get install -y wget apt-transport-https software-properties-common && . /etc/os-release && wget -q https://packages.microsoft.com/config/ubuntu/$VERSION_ID/packages-microsoft-prod.deb && sudo dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb && sudo apt-get update && sudo apt-get install -y powershell && pwsh -Command \"Install-Module AWS.Tools.Installer -Force -Scope CurrentUser && Install-AWSToolsModule AWS.Tools.Common,AWS.Tools.S3,AWS.Tools.EC2 -CleanUp\""
+  "postCreateCommand": "cd $CODESPACE_VSCODE_FOLDER && curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\" && unzip -o awscliv2.zip && sudo ./aws/install --update && PWSH_URL=$(curl -s https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -oP '\"browser_download_url\":\\s*\"\\K[^\"]*linux-x64\\.tar\\.gz(?=\")') && sudo mkdir -p /opt/microsoft/powershell/7 && curl -L \"$PWSH_URL\" -o /tmp/powershell.tar.gz && sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && sudo chmod +x /opt/microsoft/powershell/7/pwsh && sudo ln -sf /opt/microsoft/powershell/7/pwsh /usr/local/bin/pwsh && pwsh -NoLogo -Command \"Install-Module AWS.Tools.Installer -Force -Scope CurrentUser; Install-AWSToolsModule AWS.Tools.Common,AWS.Tools.S3,AWS.Tools.EC2 -CleanUp -Force\"",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.powershell",
+        "amazonwebservices.aws-toolkit-vscode"
+      ]
+    }
+  }
 }

@@ -5,4 +5,12 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+BUCKET="$1"
+
+
+echo "Emptying bucket: $BUCKET"
+
+# Simple case: remove all current objects (non-versioned buckets, or current versions)
+aws s3 rm "s3://$BUCKET" --recursive 
+
 aws s3api delete-bucket --bucket "$1"
