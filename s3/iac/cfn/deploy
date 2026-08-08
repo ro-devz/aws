@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# https://docs.aws.amazon.com/cli/latest/reference/cloudformation/deploy.html
+
+echo "==Deploy s3 bucket via CFN=="
+aws cloudformation deploy \
+    --template-file template.yaml \
+    --stack-name cfn-s3-simple \
+    --region eu-west-3
