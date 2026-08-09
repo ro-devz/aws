@@ -1,0 +1,19 @@
+{
+   "Statement": [
+      {
+         "Effect": "Allow",
+         "Principal": {
+            "AWS": "arn:aws:iam::222234418990:user/test-policies"
+         },
+         "Action": [
+            "s3:GetObject",
+            "s3:ListBucket",
+            "s3:PutObject"
+        ],
+         "Resource": [
+            "arn:aws:s3:::example-policy-rdvz",
+            "arn:aws:s3:::example-policy-rdvz/*"
+         ]
+      }
+   ]
+}
